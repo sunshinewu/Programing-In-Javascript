@@ -197,7 +197,7 @@ JavaScript函数对象的内部状态不仅包含着函数的代码逻辑，还�
 			for (i = 0; i < nodes.length; i += 1) {
 				nodes[i].onclick = function (i) {
 					return function(e){
-						alert(e);
+						alert(i); //should not be alert(e);
 					};
 				}(i);
 			}
@@ -205,6 +205,22 @@ JavaScript函数对象的内部状态不仅包含着函数的代码逻辑，还�
 
 
 这里使用一个立即执行函数并传递当前的i的值，返回一个新生成的函数。在这个新生成的函数的闭包中就保存了当前的i的值。
+
+
+
+	var add_the_handlers = function (nodes) {
+		var i;
+		var helper = function (j) {
+			return function (e) {
+				alert(j);
+		        };
+	        };
+			for (i = 0; i < nodes.length; i += 1) {
+				nodes[i].onclick = helper(i);
+			}
+	};
+
+
 
 ## 函数中的this对象
 
